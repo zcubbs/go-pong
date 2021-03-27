@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-pong
+  labels:
+    app: go-pong
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: go-pong
+      labels:
+        app: go-pong
+    spec:
+      containers:
+        - name: api
+          image: zcubbs/go-pong:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: go-pong
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-pong
+spec:
+  selector:
+    app: go-pong
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: go-pong-http
