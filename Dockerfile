@@ -7,6 +7,8 @@ ENV GOFLAGS="-mod=vendor"
 ADD . /go-app
 WORKDIR /go-app
 
+RUN ls
+RUN ls views
 RUN go build -o /server
 
 # Final stage
